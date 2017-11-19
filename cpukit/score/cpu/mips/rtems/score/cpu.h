@@ -276,7 +276,11 @@ extern "C" {
 
 #define CPU_MODES_INTERRUPT_MASK   0x000000ff
 
+#if (__mips == 64)
+#define CPU_SIZEOF_POINTER 8
+#else
 #define CPU_SIZEOF_POINTER 4
+#endif
 
 #define CPU_MAXIMUM_PROCESSORS 32
 
@@ -330,7 +334,7 @@ extern "C" {
 #if (__mips == 1) || (__mips == 32)
 #define __MIPS_REGISTER_TYPE     uint32_t
 #define __MIPS_FPU_REGISTER_TYPE uint32_t
-#elif __mips == 3
+#elif __mips == 3 || __mips == 64
 #define __MIPS_REGISTER_TYPE     uint64_t
 #define __MIPS_FPU_REGISTER_TYPE uint64_t
 #else
@@ -507,7 +511,7 @@ typedef struct
   __MIPS_REGISTER_TYPE  tlblo;    /* 73 - NOT FILLED IN, doesn't exist on */
                                   /*         all MIPS CPUs (at least MGV) */
 #endif
-#if  (__mips == 3) || (__mips == 32)
+#if  (__mips == 3) || (__mips == 32) || (__mips == 64)
   __MIPS_REGISTER_TYPE  tlblo0;   /* 73 - NOT FILLED IN, doesn't exist on */
                                   /*         all MIPS CPUs (at least MGV) */
 #endif
@@ -523,7 +527,7 @@ typedef struct
   __MIPS_REGISTER_TYPE  prid;     /* 79 -- NOT FILLED IN (not need to do so) */
   __MIPS_REGISTER_TYPE  tar ;     /* 80 -- target address register, filled on exceptions */
   /* end of __mips == 1 so NREGS == 81 */
-#if  (__mips == 3) || (__mips == 32)
+#if  (__mips == 3) || (__mips == 32) || (__mips == 64)
   __MIPS_REGISTER_TYPE  tlblo1;   /* 81 -- NOT FILLED IN */
   __MIPS_REGISTER_TYPE  pagemask; /* 82 -- NOT FILLED IN */
   __MIPS_REGISTER_TYPE  wired;    /* 83 -- NOT FILLED IN */
@@ -753,7 +757,7 @@ void _CPU_ISR_Set_level( uint32_t   );  /* in cpu.c */
  */
 
 
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 #define _INTON	        SR_IE
 #if __mips_fpr==64
 #define _EXTRABITS      SR_FR

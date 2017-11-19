@@ -45,7 +45,7 @@ extern "C" {
  *  NOTE: XXX what about SR_ERL?
  */
 
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 #ifdef ASM
 #define SR_INTERRUPT_ENABLE_BITS 0x01
 #else
@@ -56,7 +56,6 @@ extern "C" {
 #define SR_INTERRUPT_ENABLE_BITS SR_IEC
 
 #else
-#error "mips interrupt enable bits: unknown architecture level!"
 #endif
 
 /*
@@ -77,7 +76,7 @@ extern "C" {
 
 #if (__mips == 1)
 #define CPU_MODEL_NAME  "ISA Level 1 or 2"
-#elif (__mips == 3) || (__mips == 32)
+#elif (__mips == 3) || (__mips == 32) || (__mips == 64)
 #if defined(__mips64)
 #define CPU_MODEL_NAME  "ISA Level 4"
 #else

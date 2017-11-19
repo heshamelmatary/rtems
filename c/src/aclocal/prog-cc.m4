@@ -1,4 +1,4 @@
-dnl 
+dnl
 dnl Check for target gcc
 dnl
 
@@ -40,7 +40,7 @@ AS_IF([test x"$rtems_cv_gcc_isystem" = xyes],[
 AC_SUBST(RTEMS_CPPFLAGS)
 
 AS_IF([test "$GCC" = yes],[
-  RTEMS_RELLDFLAGS="-qnolinkcmds -nostdlib -r"
+  RTEMS_RELLDFLAGS="-nostdlib -r"
 ])
 AC_SUBST(RTEMS_RELLDFLAGS)
 ])

@@ -72,7 +72,7 @@ ENDFRAME(exc_norm_code)
  * MIPS ISA Level 3
  * XXX Again, reliance on SIM. Not good.
  */
-#elif __mips == 3
+#elif __mips == 3 || (__mips == 64)
 
 FRAME(exc_tlb_code,sp,0,ra)
         la      k0, (R_VEC+((112)*8)) /* R4000 Sim location */

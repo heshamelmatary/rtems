@@ -5,16 +5,16 @@
 /*
  * Declare some sizes.
  */
-RamBase = DEFINED(RamBase) ? RamBase : 0x80000000;
+RamBase = DEFINED(RamBase) ? RamBase : 0x0000000080000000;
 RamSize = DEFINED(RamSize) ? RamSize : 128M;
 HeapSize = DEFINED(HeapSize) ? HeapSize : 0x0;
 _StackSize = DEFINED(_StackSize) ? _StackSize : 0x2000;
 
 SECTIONS
-{ 
-    . = 0x80010000;
-    .text : 
-    { 
+{
+    . = 0x0000000080010000;
+    .text :
+    {
        _ftext = . ;
        eprol  =  .;
       *(.text*)

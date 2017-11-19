@@ -92,7 +92,7 @@
  *  and MIPS ISA Level 1 (R3xxx).
  */
 
-#if __mips == 3
+#if __mips == 3 || __mips == 64
 /* 64 bit register operations */
 #define NOP	nop
 #define ADD	dadd
@@ -232,7 +232,7 @@ FRAME(_CPU_Context_save_fp,sp,0,ra)
 	li	t2,SR_CU1
 	move	t1,t0
 	or	t0,t2		/* turn on the fpu */
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 	li	t2,SR_IE
 #elif __mips == 1
 	li	t2,SR_IEC
@@ -943,7 +943,7 @@ _ISR_Handler_1:
    *    restore stack
    *  #endif
    *
-   *  if !_Thread_Dispatch_necessary 
+   *  if !_Thread_Dispatch_necessary
    *    goto the label "exit interrupt (simple case)"
    */
         lbu	t0,DISPATCH_NEEDED
@@ -1025,7 +1025,7 @@ _ISR_Handler_1:
         and  t0,t1
         mtc0 t0,C0_SR
   	NOP
-  
+
  	/* apply task's SR with EXL set so the eret will return properly */
  	or	t0, SR_EXL | SR_IE
  	mtc0    t0, C0_SR
@@ -1036,7 +1036,7 @@ _ISR_Handler_1:
 	NOP
  	MTCO	t0, C0_EPC
  	NOP
- 
+
 #endif
 
 
@@ -1109,7 +1109,7 @@ _ISR_Handler_exit:
 
         ADDIU     sp,sp,EXCP_STACK_SIZE
 
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 	eret
 #elif __mips == 1
   	j         k1

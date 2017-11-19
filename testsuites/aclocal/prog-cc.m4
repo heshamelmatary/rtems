@@ -1,4 +1,4 @@
-dnl 
+dnl
 dnl Check for target gcc
 dnl
 
@@ -29,6 +29,6 @@ AS_IF([test "${enable_cpukit_root+set}"],[
   GCCSPECS="-B\$(CPUKIT_ROOT)/lib/"])
 AS_IF([test "${enable_project_root+set}"],[
   GCCSPECS="$GCCSPECS -B\$(PROJECT_ROOT)/lib/"])
-GCCSPECS="${GCCSPECS} -specs bsp_specs -qrtems"])
+GCCSPECS="${GCCSPECS}"])
 AC_SUBST(GCCSPECS)
 ])

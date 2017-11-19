@@ -1,4 +1,4 @@
-dnl 
+dnl
 dnl Check for target gcc
 dnl
 
@@ -33,7 +33,7 @@ RTEMS_CPPFLAGS="-I\$(top_builddir) -I\$(PROJECT_INCLUDE)"
 AC_SUBST(RTEMS_CPPFLAGS)
 
 AS_IF([test "$GCC" = yes],[
-  RTEMS_RELLDFLAGS="-qnolinkcmds -nostdlib -r"
+  RTEMS_RELLDFLAGS="-nostdlib -r"
 ])
 AC_SUBST(RTEMS_RELLDFLAGS)
 ])

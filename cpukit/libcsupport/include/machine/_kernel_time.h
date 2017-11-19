@@ -106,6 +106,10 @@ extern sbintime_t sbt_tickthreshold;
  * performance is priority. (NB: "precision", _not_ "resolution" !)
  */
 
+void _Timecounter_Binuptime( struct bintime *bt );
+void _Timecounter_Getbinuptime( struct bintime *bt );
+
+
 #define	binuptime(_bt) _Timecounter_Binuptime(_bt)
 #define	nanouptime(_tsp) _Timecounter_Nanouptime(_tsp)
 #define	microuptime(_tvp) _Timecounter_Microuptime(_tvp)

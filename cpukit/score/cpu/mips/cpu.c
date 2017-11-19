@@ -64,7 +64,7 @@ Context_Control_fp _CPU_Null_fp_context;
 */
 #if (__mips == 1) || (__mips == 32)
 typedef uint32_t ESF_PTR_TYPE;
-#elif (__mips == 3)
+#elif (__mips == 3) || (__mips == 64)
 typedef uint64_t ESF_PTR_TYPE;
 #else
 #error "unknown MIPS ISA"
@@ -103,7 +103,7 @@ uint32_t   _CPU_ISR_Get_level( void )
 
   /* printf("current sr=%08X, ",sr); */
 
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 /* IE bit and shift down hardware ints into bits 1 thru 6 */
   sr = (sr & SR_IE) | ((sr & mips_interrupt_mask()) >> 9);
 
@@ -133,7 +133,7 @@ void _CPU_ISR_Set_level( uint32_t   new_level )
 
   mips_get_sr(sr);
 
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
   mips_set_sr( (sr & ~SR_IE) );                 /* first disable ie bit (recommended) */
 
    srbits = sr & ~(0xfc00 | SR_IE);
@@ -223,7 +223,7 @@ void _CPU_Context_Initialize(
 
 void *_CPU_Thread_Idle_body( uintptr_t ignored )
 {
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
    for( ; ; )
      __asm__ volatile("wait"); /* use wait to enter low power mode */
 #elif __mips == 1

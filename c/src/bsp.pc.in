@@ -15,4 +15,4 @@ Name: @host_alias@-@RTEMS_BSP@
 Version: @VERSION@
 Description: RTEMS BSP @RTEMS_BSP@
 Libs:
-Cflags: -qrtems -B${exec_prefix}/lib/ -B${libdir}/ --specs bsp_specs ${CFLAGS}
+Cflags: -B${exec_prefix}/lib/ -B${libdir}/ ${CFLAGS}

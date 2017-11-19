@@ -1,6 +1,6 @@
 /**
  *  @file
- *  
+ *
  *  Common Code for Vectoring MIPS Exceptions
  *
  *  The actual decoding of the cause register and vector number assignment
@@ -55,7 +55,7 @@ void _CPU_Exception_frame_print( const CPU_Exception_frame *frame )
 #if (__mips == 1 ) || (__mips == 32)
      printk("  %08" PRIu32 "%c",
             frame_u32[dumpregs[i].offset], (i%3) ? '\t' : '\n' );
-#elif __mips == 3
+#elif __mips == 3 || (__mips == 64)
      printk("  %08" PRIu32 "", frame_u32[2 * dumpregs[i].offset + 1] );
      printk("%08" PRIu32 "%c",
             frame_u32[2 * dumpregs[i].offset], (i%2) ? '\t' : '\n' );
