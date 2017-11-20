@@ -234,7 +234,7 @@
 #if __mips == 1
 #define	R_TLBLO		73
 #endif
-#if  (__mips == 3 ) || ( __mips == 32)
+#if  (__mips == 3 ) || ( __mips == 32) || (__mips == 64)
 #define	R_TLBLO0	73
 #endif
 
@@ -248,7 +248,7 @@
 #if __mips == 1
 #define NREGS		81
 #endif
-#if  (__mips == 3 ) || ( __mips == 32)
+#if  (__mips == 3 ) || ( __mips == 32) || (__mips == 64)
 #define	R_TLBLO1	81
 #define R_PAGEMASK	82
 #define R_WIRED		83

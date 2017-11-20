@@ -41,7 +41,7 @@
   #include <usc.h>
 #endif
 
-#if __mips == 3
+#if __mips == 3 || __mips == 64
 /* 64 bit register operations */
 #define NOP	nop
 #define ADD	dadd
@@ -155,7 +155,7 @@ _chk_int:
 /* For debugging interrupts, clear EXL to allow breakpoints */
 #if 0
         MFC0    k0, C0_SR
-#if __mips == 3
+#if __mips == 3 || __mips == 64
 	li	k1,SR_EXL	/* Clear EXL and Set IE to enable interrupts */
 	not	k1
 	and	k0,k1
@@ -328,7 +328,7 @@ _ISR_Handler_cleanup:
 */
 
         mfc0    t0, C0_SR
-#if __mips == 3
+#if __mips == 3 || __mips == 64
 	li	t1,SR_EXL	/* Clear EXL and Set IE to enable interrupts */
 	not	t1
 	and	t0,t1
@@ -358,7 +358,7 @@ _ISR_Handler_cleanup:
 ** a badly timed interrupt won't accidentally mess things up
 */
         mfc0    t0, C0_SR
-#if __mips == 3
+#if __mips == 3 || __mips == 64
 	li	t1,SR_IE		/* Clear IE first (recommended) */
 	not	t1
 	and	t0,t1

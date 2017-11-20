@@ -10,10 +10,16 @@ AC_CANONICAL_TARGET
 AC_MSG_CHECKING(rtems target cpu)
 case "${target}" in
   no_cpu-*rtems*)
-        RTEMS_CPU=no_cpu
+	RTEMS_CPU=no_cpu
 	;;
-  riscv*-*rtems*)
-        RTEMS_CPU=riscv
+  riscv*-*-rtems*)
+	RTEMS_CPU=riscv
+	;;
+  mips*-*-rtems*)
+	RTEMS_CPU=mips
+	;;
+  cheri*-*-rtems*)
+	RTEMS_CPU=mips
 	;;
   *)
 	RTEMS_CPU=`echo $target | sed 's%^\([[^-]]*\)-\(.*\)$%\1%'`

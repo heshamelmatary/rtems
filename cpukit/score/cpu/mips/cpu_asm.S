@@ -92,7 +92,7 @@
  *  and MIPS ISA Level 1 (R3xxx).
  */
 
-#if __mips == 3
+#if __mips == 3 || __mips == 64
 /* 64 bit register operations */
 #define NOP	nop
 #define ADD	dadd
@@ -232,7 +232,7 @@ FRAME(_CPU_Context_save_fp,sp,0,ra)
 	li	t2,SR_CU1
 	move	t1,t0
 	or	t0,t2		/* turn on the fpu */
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 	li	t2,SR_IE
 #elif __mips == 1
 	li	t2,SR_IEC
@@ -451,7 +451,7 @@ FRAME(_CPU_Context_switch,sp,0,ra)
 	** routine gets it.
 	*/
 
-	la	t0,__exceptionStackFrame	/* see if we're coming in from an exception */
+	dla	t0,__exceptionStackFrame	/* see if we're coming in from an exception */
 	LDREG	t1, (t0)
 	NOP
 	beqz	t1,1f
@@ -462,7 +462,7 @@ FRAME(_CPU_Context_switch,sp,0,ra)
 	b	2f
 	NOP
 
-1:	la      t0,_Thread_Dispatch		/* if ==0, we're switched out */
+1:	dla      t0,_Thread_Dispatch		/* if ==0, we're switched out */
 
 2:	STREG   t0,C0_EPC_OFFSET*R_SZ(a0)
 
@@ -594,7 +594,7 @@ ENDFRAME(_CPU_Context_restore)
  */
 FRAME(_DBG_Handler,sp,0,ra)
         .set noreorder
-	la	k0,_ISR_Handler
+	dla	k0,_ISR_Handler
 	j	k0
 	NOP
 	.set reorder
@@ -730,7 +730,7 @@ _ISR_Handler_Exception:
         beqz     t0, 1f
         NOP
 
-        la       a1,R_F0*R_SZ(sp)
+        dla       a1,R_F0*R_SZ(sp)
         jal      _CPU_Context_save_fp_from_exception
         NOP
         mfc1     t0,C1_REVISION
@@ -802,7 +802,7 @@ excreturn:
  /* if we're returning into mips_break, move to the next instruction */
 
         LDREG	t0,R_EPC*R_SZ(sp)
-	la	t1,mips_break
+	dla	t1,mips_break
 	xor	t2,t0,t1
 	bnez	t2,3f
 
@@ -822,7 +822,7 @@ excreturn:
         beqz     t0, 2f
         NOP
 
-        la       a1,R_F0*R_SZ(sp)
+        dla       a1,R_F0*R_SZ(sp)
         jal      _CPU_Context_restore_fp_from_exception
         NOP
         LDREG    t0,R_FEIR*R_SZ(sp)
@@ -943,7 +943,7 @@ _ISR_Handler_1:
    *    restore stack
    *  #endif
    *
-   *  if !_Thread_Dispatch_necessary 
+   *  if !_Thread_Dispatch_necessary
    *    goto the label "exit interrupt (simple case)"
    */
         lbu	t0,DISPATCH_NEEDED
@@ -988,7 +988,7 @@ _ISR_Handler_1:
 	NOP
 
 	/* save off our stack frame so the context switcher can get to it */
-	la	t0,__exceptionStackFrame
+	dla	t0,__exceptionStackFrame
 	STREG	sp,(t0)
 
         jal     _Thread_Dispatch
@@ -998,7 +998,7 @@ _ISR_Handler_1:
 	** And make sure its clear in case we didn't dispatch.  if we did, its
 	** already cleared
 	*/
-	la	t0,__exceptionStackFrame
+	dla	t0,__exceptionStackFrame
 	STREG	zero,(t0)
 	NOP
 
@@ -1036,7 +1036,7 @@ _ISR_Handler_1:
 	NOP
  	MTCO	t0, C0_EPC
  	NOP
- 
+
 #endif
 
 
@@ -1109,7 +1109,7 @@ _ISR_Handler_exit:
 
         ADDIU     sp,sp,EXCP_STACK_SIZE
 
-#if (__mips == 3) || (__mips == 32)
+#if (__mips == 3) || (__mips == 32) || (__mips == 64)
 	eret
 #elif __mips == 1
   	j         k1

@@ -81,7 +81,7 @@ zerobss:
 	move	sp,t0			/* set stack pointer */
 	.end	zerobss
 
-	.globl	exit .text
+	.globl	exit
 	.globl	init
 	.ent	init
 init:

@@ -186,7 +186,7 @@
  * Saved register information.  Must be prepared by the exception
  * preprocessor before handle_exception is invoked.
  */
-#if (__mips == 3)
+#if (__mips == 3) || (__mips == 64)
 typedef long long mips_register_t;
 #define R_SZ 8
 #elif (__mips == 1)

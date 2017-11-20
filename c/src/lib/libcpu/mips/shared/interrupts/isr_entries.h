@@ -29,7 +29,7 @@ extern void exc_tlb_code(void);
 extern void exc_xtlb_code(void);
 extern void exc_cache_code(void);
 extern void exc_norm_code(void);
-#elif __mips == 3
+#elif __mips == 3 || (__mips == 64)
 extern void exc_tlb_code(void);
 extern void exc_xtlb_code(void);
 extern void exc_cache_code(void);
