@@ -112,17 +112,17 @@ int FindPCIbridge( int mybus, struct pcibridge *pb );
 
 const pci_config_access_functions pci_indirect_functions;
 
-void     pci_out_le32( uint32_t base, uint32_t addr, uint32_t val);
-void     pci_out_32( uint32_t base, uint32_t addr, uint32_t val);
-uint8_t  pci_in_8    ( uint32_t base, uint32_t addr );
-int16_t  pci_in_le16 ( uint32_t base, uint32_t addr );
-uint32_t pci_in_le32 ( uint32_t base, uint32_t addr );
-int16_t  pci_in_16 ( uint32_t base, uint32_t addr );
-uint32_t pci_in_32 ( uint32_t base, uint32_t addr );
-void     pci_out_8   ( uint32_t base, uint32_t addr, uint8_t val );
-void     pci_out_le16( uint32_t base, uint32_t addr, uint16_t val );
-void     pci_out_16( uint32_t base, uint32_t addr, uint16_t val );
-void     pci_out_32  ( uint32_t base, uint32_t addr, uint32_t val);
+void     pci_out_le32( uint64_t base, uint64_t addr, uint32_t val);
+void     pci_out_32( uint64_t base, uint64_t addr, uint32_t val);
+uint8_t  pci_in_8    ( uint64_t base, uint64_t addr );
+int16_t  pci_in_le16 ( uint64_t base, uint64_t addr );
+uint32_t pci_in_le32 ( uint64_t base, uint64_t addr );
+int16_t  pci_in_16 ( uint64_t base, uint64_t addr );
+uint32_t pci_in_32 ( uint64_t base, uint64_t addr );
+void     pci_out_8   ( uint64_t base, uint64_t addr, uint8_t val );
+void     pci_out_le16( uint64_t base, uint64_t addr, uint16_t val );
+void     pci_out_16( uint64_t base, uint64_t addr, uint16_t val );
+void     pci_out_32  ( uint64_t base, uint64_t addr, uint32_t val);
 
 #define out_32(_addr, _val)   pci_out_32(BSP_PCI_BASE_ADDRESS, _addr, _val)
 #define out_le32(_addr, _val) pci_out_le32(BSP_PCI_BASE_ADDRESS, _addr, _val)

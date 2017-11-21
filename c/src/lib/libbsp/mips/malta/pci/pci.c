@@ -42,7 +42,7 @@
 
 #ifndef  PCI_CONFIG_ADDR_VAL
 #define  PCI_CONFIG_ADDR_VAL(bus, slot, funcion, offset) \
-     (0x80000000|((bus)<<16)|(PCI_DEVFN((slot),(function))<<8)|(((offset)&~3)))
+     (0xFFFFFFFF80000000ULL|((bus)<<16)|(PCI_DEVFN((slot),(function))<<8)|(((offset)&~3)))
 #endif
 
 #ifdef DEBUG_PCI
@@ -52,7 +52,7 @@
 #endif
 
 #ifndef  PCI_CONFIG_WR_ADDR
-#define  PCI_CONFIG_WR_ADDR( addr, val ) out_le32((uint32_t)(addr), (val))
+#define  PCI_CONFIG_WR_ADDR( addr, val ) out_le32((uint64_t)(addr), (val))
 #endif
 
 /* Bit encode for PCI_CONFIG_HEADER_TYPE register */
@@ -175,17 +175,17 @@ const pci_config_access_functions pci_direct_functions = {
  * PCI specific accesses.  Note these are made on 32 bit
  * boundries.
  */
-void pci_out_32(uint32_t base, uint32_t addr, uint32_t val)
+void pci_out_32(uint64_t base, uint64_t addr, uint32_t val)
 {
   volatile uint32_t *ptr;
 
   ptr = (volatile uint32_t *) (base + addr);
   *ptr = val;
 
-  JPRINTK( "%p data: 0x%x\n", ptr, val);
+  JPRINTK( "%p data: 0x%llx\n", ptr, val);
 }
 
-void pci_out_le32(uint32_t base, uint32_t addr, uint32_t val)
+void pci_out_le32(uint64_t base, uint64_t addr, uint32_t val)
 {
   volatile uint32_t *ptr;
   uint32_t           data = 0;
@@ -197,7 +197,7 @@ void pci_out_le32(uint32_t base, uint32_t addr, uint32_t val)
   JPRINTK( "%p data: 0x%x\n", ptr, data);
 }
 
-uint8_t pci_in_8( uint32_t base, uint32_t addr ) {
+uint8_t pci_in_8( uint64_t base, uint64_t addr ) {
   volatile uint32_t *ptr;
   uint8_t            val;
   uint32_t           data;
@@ -213,12 +213,12 @@ uint8_t pci_in_8( uint32_t base, uint32_t addr ) {
     case 3: val = (data & 0xff000000) >> 24; break;
    }
 
-   JPRINTK( "0x%x data: 0x%x raw: 0x%x\n", ptr, val, data);
+   JPRINTK( "0x%p data: 0x%x raw: 0x%x\n", ptr, val, data);
 
   return val;
 }
 
-int16_t pci_in_le16( uint32_t base, uint32_t addr ) {
+int16_t pci_in_le16( uint64_t base, uint64_t addr ) {
   volatile uint32_t *ptr;
   uint16_t           val;
   uint16_t           rval;
@@ -233,11 +233,11 @@ int16_t pci_in_le16( uint32_t base, uint32_t addr ) {
     val = (data>>16) & 0xffff;
 
   rval = rtems_uint16_from_little_endian( (uint8_t *) &val);
-  JPRINTK( "0x%x data: 0x%x raw: 0x%x\n", ptr, rval, data);
+  JPRINTK( "0x%p data: 0x%x raw: 0x%x\n", ptr, rval, data);
   return rval;
 }
 
-int16_t pci_in_16( uint32_t base, uint32_t addr ) {
+int16_t pci_in_16( uint64_t base, uint64_t addr ) {
   volatile uint32_t *ptr;
   uint16_t           val;
   uint32_t           data;
@@ -250,21 +250,21 @@ int16_t pci_in_16( uint32_t base, uint32_t addr ) {
   else
     val = (data>>16) & 0xffff;
 
-  JPRINTK( "0x%x data: 0x%x raw: 0x%x\n", ptr, val, data);
+  JPRINTK( "0x%p data: 0x%x raw: 0x%x\n", ptr, val, data);
   return val;
 }
 
-uint32_t pci_in_32( uint32_t base, uint32_t addr ) {
+uint32_t pci_in_32( uint64_t base, uint64_t addr ) {
   volatile uint32_t *ptr;
   uint32_t           val;
 
   ptr = (volatile uint32_t *) (base + addr);
   val = *ptr;
 
-  JPRINTK( "0x%x data: 0x%x raw: 0x%x\n", ptr, val, val);
+  JPRINTK( "0x%p data: 0x%x raw: 0x%x\n", ptr, val, val);
   return val;
 }
-uint32_t pci_in_le32( uint32_t base, uint32_t addr ) {
+uint32_t pci_in_le32( uint64_t base, uint64_t addr ) {
   volatile uint32_t *ptr;
   uint32_t           val;
   uint32_t           rval;
@@ -273,11 +273,11 @@ uint32_t pci_in_le32( uint32_t base, uint32_t addr ) {
   val = *ptr;
   rval = rtems_uint32_from_little_endian( (uint8_t *) &val);
 
-  JPRINTK( "0x%x data: 0x%x raw: 0x%x\n", ptr, rval, val);
+  JPRINTK( "0x%p data: 0x%x raw: 0x%x\n", ptr, rval, val);
   return rval;
 }
 
-void pci_out_8( uint32_t base, uint32_t addr, uint8_t val ) {
+void pci_out_8( uint64_t base, uint64_t addr, uint8_t val ) {
   volatile uint32_t *ptr;
 
   ptr = (volatile uint32_t *) (base + addr);
@@ -286,7 +286,7 @@ void pci_out_8( uint32_t base, uint32_t addr, uint8_t val ) {
   JPRINTK( "%p data: 0x%x\n", ptr, val);
 }
 
-void pci_out_le16( uint32_t base, uint32_t addr, uint16_t val ) {
+void pci_out_le16( uint64_t base, uint64_t addr, uint16_t val ) {
   volatile uint32_t *ptr;
   uint32_t           out_data;
   uint32_t           data;
@@ -300,10 +300,10 @@ void pci_out_le16( uint32_t base, uint32_t addr, uint16_t val ) {
   rtems_uint32_to_little_endian( out_data, (uint8_t *) &data);
   *ptr = data;
 
-  JPRINTK( "0x%x data: 0x%x\n", ptr, data);
+  JPRINTK( "0x%p data: 0x%x\n", ptr, data);
 }
 
-void pci_out_16( uint32_t base, uint32_t addr, uint16_t val ) {
+void pci_out_16( uint64_t base, uint64_t addr, uint16_t val ) {
   volatile uint32_t *ptr;
   uint32_t           out_data;
   uint32_t           data;
@@ -316,7 +316,7 @@ void pci_out_16( uint32_t base, uint32_t addr, uint16_t val ) {
     out_data = ((val << 16)&0xffff0000) | (data & 0xffff);
   *ptr = out_data;
 
-  JPRINTK( "0x%x data: 0x%x\n", ptr, out_data);
+  JPRINTK( "0%p data: 0x%x\n", ptr, out_data);
 }
 
 /*

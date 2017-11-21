@@ -157,7 +157,7 @@ extern "C" {
  */
 
 #if ( MIPS_HAS_FPU == 1 )
-#define CPU_HARDWARE_FP     TRUE
+#define CPU_HARDWARE_FP     FALSE
 #else
 #define CPU_HARDWARE_FP     FALSE
 #endif

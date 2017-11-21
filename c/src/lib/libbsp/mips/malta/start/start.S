@@ -36,7 +36,7 @@
 #  define LA(t,x) la t,x-PICBASE ; addu t,s0,t
 # endif
 #else /* __mips_embedded_pic */
-# define LA(t,x) la t,x
+# define LA(t,x) dla t,x
 #endif /* __mips_embedded_pic */
 
 	.text
@@ -146,7 +146,8 @@ _start_in_ram:
 	jr	v0
 	nop
 3:
-	LA (gp, _gp)				# set the global data pointer
+	/* LA (gp, _gp)				# set the global data pointer */
+	dla gp, _gp				# set the global data pointer
 #if 0
 	.end _start_in_ram
 #else
