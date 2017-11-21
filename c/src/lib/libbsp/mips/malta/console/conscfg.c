@@ -37,7 +37,7 @@
 // #define CLOCK_RATE     368640
 #define CLOCK_RATE     (115200 * 16)
 
-#define COM_IO_BASE_ADDRESS   (0xa0000000UL | 0x18000000UL)
+#define COM_IO_BASE_ADDRESS   (0xFFFFFFFFa0000000UL | 0xFFFFFFFF18000000UL)
 
 static uint8_t com_get_register(uintptr_t addr, uint8_t i);
 static void com_set_register(uintptr_t addr, uint8_t i, uint8_t val);

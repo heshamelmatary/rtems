@@ -146,7 +146,8 @@ _start_in_ram:
 	jr	v0
 	nop
 3:
-	LA (gp, _gp)				# set the global data pointer
+	/* LA (gp, _gp)				# set the global data pointer */
+	dla gp, _gp				# set the global data pointer
 #if 0
 	.end _start_in_ram
 #else

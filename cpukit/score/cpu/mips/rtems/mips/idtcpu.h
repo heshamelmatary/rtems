@@ -50,14 +50,14 @@
 /*
 ** memory configuration and mapping
 */
-#define K0BASE	0x80000000
+#define K0BASE	0xFFFFFFFF80000000ULL
 #define K0SIZE	0x20000000
-#define K1BASE	0xa0000000
+#define K1BASE	0xFFFFFFFFa0000000ULL
 #define K1SIZE	0x20000000
-#define K2BASE	0xc0000000
+#define K2BASE	0xFFFFFFFFc0000000ULL
 #define K2SIZE	0x20000000
 #if  __mips == 3 || (__mips == 64)
-#define KSBASE	0xe0000000
+#define KSBASE	0xFFFFFFFFe0000000ULL
 #define KSSIZE	0x20000000
 #endif
 

@@ -5,14 +5,14 @@
 /*
  * Declare some sizes.
  */
-RamBase = DEFINED(RamBase) ? RamBase : 0x0000000080000000;
+RamBase = DEFINED(RamBase) ? RamBase : 0xFFFFFFFF80000000;
 RamSize = DEFINED(RamSize) ? RamSize : 128M;
 HeapSize = DEFINED(HeapSize) ? HeapSize : 0x0;
 _StackSize = DEFINED(_StackSize) ? _StackSize : 0x2000;
 
 SECTIONS
 {
-    . = 0x0000000080010000;
+    . = 0xFFFFFFFF80010000;
     .text :
     {
        _ftext = . ;
@@ -169,14 +169,14 @@ SECTIONS
     WorkAreaBase = .;
     _clear_end = .;
   }
-  . = 0x88400000; /* reserve some memory for Work Area */
+  . = 0xFFFFFFFF88400000; /* reserve some memory for Work Area */
  end = .;
  _end = .;
 
 
 /* Put starting stack in SRAM (8 Kb); this size is the same as the stack from
       the original script (when everything was in SRAM). */
-   /* __stack = 0x8000A000; */
+   /* __stack = 0xFFFFFFFF8000A000; */
   /* DWARF debug sections.
      Symbols in the DWARF debugging sections are relative to
      the beginning of the section so we begin them at 0.  */
