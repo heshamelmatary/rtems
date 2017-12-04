@@ -31,12 +31,12 @@
    .sbss section under embedded-pic, or before we've set up gp.  */
 #ifdef __mips_embedded_pic
 # ifdef __mips64
-#  define LA(t,x) la t,x-PICBASE ; daddu t,s0,t
+#  define LA(t,x) dla t,x-PICBASE ; daddu t,s0,t
 # else
-#  define LA(t,x) la t,x-PICBASE ; addu t,s0,t
+#  define LA(t,x) dla t,x-PICBASE ; addu t,s0,t
 # endif
 #else /* __mips_embedded_pic */
-# define LA(t,x) la t,x
+# define LA(t,x) dla t,x
 #endif /* __mips_embedded_pic */
 
 	.text
@@ -81,7 +81,7 @@ _branch:
 	beq	$5, $6, _start_in_ram
 	nop
 	/* relocate the code from EEPROM to RAM */
-        la	$7, _edata
+        dla	$7, _edata
 relocate:
         nop
 	lw	$8, ($5)			# $8 = *EEPROM
@@ -90,7 +90,7 @@ relocate:
 	addu	$6, $6, 4			# RAM++
 	bne	$6, $7, relocate		# copied all the way to edata?
 	nop
-	la	$6, _start_in_ram
+	dla	$6, _start_in_ram
 	jr	$6
 	nop
 	.end _start
@@ -166,7 +166,7 @@ zerobss:
 	bltu	v0,v1,3b
 	addiu	v0,v0,4				# executed in delay slot
 
-	la	t0, _stack_init			# initialize stack so we
+	dla	t0, _stack_init			# initialize stack so we
 	/* We must subtract 24 bytes for the 3 8 byte arguments to main, in
 	   case main wants to write them back to the stack.  The caller is
 	   supposed to allocate stack space for parameters in registers in
