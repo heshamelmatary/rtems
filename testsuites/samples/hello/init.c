@@ -30,6 +30,9 @@ rtems_task Init(
 {
   rtems_print_printer_fprintf_putc(&rtems_test_printer);
   rtems_test_begin();
+
+  __capability void *cap;
+
   printf( "Hello World\n" );
   rtems_test_end();
   exit( 0 );

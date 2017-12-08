@@ -75,26 +75,26 @@ ENDFRAME(exc_norm_code)
 #elif __mips == 3 || (__mips == 64)
 
 FRAME(exc_tlb_code,sp,0,ra)
-        la      k0, (R_VEC+((112)*8)) /* R4000 Sim location */
+        dla      k0, (R_VEC+((112)*8)) /* R4000 Sim location */
         j       k0
 	nop
 ENDFRAME(exc_tlb_code)
 
 FRAME(exc_xtlb_code,sp,0,ra)
-        la      k0, (R_VEC+((112)*8)) /* R4000 Sim location */
+        dla      k0, (R_VEC+((112)*8)) /* R4000 Sim location */
         j       k0
 	nop
 
 ENDFRAME(exc_xtlb_code)
 
 FRAME(exc_cache_code,sp,0,ra)
-        la      k0, (R_VEC+((112)*8)) /* R4000 Sim location */
+        dla      k0, (R_VEC+((112)*8)) /* R4000 Sim location */
         j       k0
 	nop
 ENDFRAME(exc_cache_code)
 
 FRAME(exc_norm_code,sp,0,ra)
-	la	k0, _ISR_Handler /* generic external int hndlr */
+	dla	k0, _ISR_Handler /* generic external int hndlr */
 	j	k0
 	nop
 ENDFRAME(exc_norm_code)
