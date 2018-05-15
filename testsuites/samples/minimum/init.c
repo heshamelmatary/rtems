@@ -25,6 +25,7 @@ static void *Init( uintptr_t ignored )
   /* initialize application */
 
   /* Real application would call idle loop functionality */
+   asm volatile ("csrr x1, 0xcc0");
 
   /* but in this case, just return and fall into a fatal error */
 
